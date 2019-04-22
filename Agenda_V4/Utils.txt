@@ -1,0 +1,45 @@
+﻿//Conexão com o banco
+
+SqlConnection conexao = new SqlConnection(Conexao.Con); 
+	try
+    {
+		conexao.Open();                     // Abre a conexão
+    }
+    catch (Exception ex)
+    {
+		MessageBox.Show("Erro " + ex.Message); 
+        throw;
+    }
+    finally
+    {
+		// Seu código Aqui
+		SqlCommand cmd = new SqlCommand("SELECT * FROM tblDisciplina", conexao); //Comando Sql
+		conexao.Close();		// Encerra a Conexão com o banco
+	}
+
+	//******************************************
+	//PREENCHER UM TEXTBOX A PARTIR DE UMA SELEÇÃO DO COMBOBOX
+	// No evento SelectedIndexChanged, colocar o código abaixo
+
+            SqlConnection conexao = new SqlConnection(Conexao.Con); // string de Conexão
+            try											// tenta executar
+            {
+                conexao.Open();                     // Abre a conexão
+            }
+            catch (Exception ex)					// Se não conectou
+            {
+                MessageBox.Show("Erro " + ex.Message);
+                throw;
+            }
+            finally									//Se conectou então finaliza
+            {
+                SqlCommand cmd = new SqlCommand("SELECT * FROM tblDisciplina", conexao); // executa a busca no bd
+                DataRowView drw = ((DataRowView)comboBoxDissiplina.SelectedItem);	//Carrega a tabela na memoria
+                textBoxCodDisciplina.Text = drw["CodDisciplina"].ToString();		// tranfere o dado selecionado para o textBox
+                conexao.Close();
+            }
+
+//*******************************************************************************************************
+  
+  String Gravar no banco 
+  SqlCommand cmd = new SqlCommand("INSERT INTO tblDisciplina(CodDisciplina, Disciplina, Cor_R, Cor_G, Cor_B) VALUES('" + textBoxCodDisciplina.Text + "','" + textBoxDisciplina.Text + "','" + Cor_R + "', '" + Cor_G + "', '" + Cor_B + "')", conexao);
